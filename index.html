@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heyllo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class' }
+</script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 transition duration-300">
+
+<!-- Splash Screen -->
+<div id="splash" class="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 text-white text-3xl font-bold z-50">
+  Heyllo 💖
+</div>
+
+<div id="app" class="hidden max-w-md mx-auto min-h-screen relative pb-20">
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-pink-500 to-purple-500 p-4 text-white text-center text-2xl font-bold rounded-b-3xl shadow-md">
+  Heyllo
+</div>
+
+<!-- Pages -->
+<div id="homePage" class="p-4 space-y-4"></div>
+
+<div id="searchPage" class="hidden p-4">
+  <input id="searchInput" placeholder="Search posts..."
+    class="w-full p-2 rounded-xl border mb-4">
+  <div id="searchResults"></div>
+</div>
+
+<div id="createPage" class="hidden p-4 space-y-3">
+  <textarea id="postText" placeholder="What's on your mind?"
+    class="w-full p-3 rounded-xl border"></textarea>
+
+  <select id="moodSelect" class="w-full p-2 rounded-xl border">
+    <option value="😊 Happy">😊 Happy</option>
+    <option value="🌊 Chill">🌊 Chill</option>
+    <option value="✈️ Travel">✈️ Travel</option>
+    <option value="🔥 Motivated">🔥 Motivated</option>
+  </select>
+
+  <button onclick="addPost()"
+    class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white p-3 rounded-xl">
+    Post
+  </button>
+</div>
+
+<div id="notifPage" class="hidden p-4">
+  <p class="text-gray-700 dark:text-gray-200">No new notifications 🔔</p>
+</div>
+
+<div id="profilePage" class="hidden p-4 text-center">
+  <div class="w-20 h-20 bg-pink-400 rounded-full mx-auto mb-3"></div>
+  <h2 class="font-bold text-lg dark:text-white">@heyllo_user</h2>
+  <p class="text-gray-600 dark:text-gray-300">Welcome to Heyllo 💖</p>
+</div>
+
+</div>
+
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-t-3xl flex justify-around py-3">
+
+<button onclick="showPage('home')" class="text-pink-500 text-xl">🏠</button>
+<button onclick="showPage('search')" class="text-gray-500 dark:text-gray-300 text-xl">🔍</button>
+
+<button onclick="showPage('create')" 
+class="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-2xl px-4 py-1 rounded-full shadow-lg -mt-6">
++
+</button>
+
+<button onclick="showPage('notif')" class="text-gray-500 dark:text-gray-300 text-xl">🔔</button>
+<button onclick="showPage('profile')" class="text-gray-500 dark:text-gray-300 text-xl">👤</button>
+
+</div>
+
+<!-- Dark Mode Toggle -->
+<button onclick="toggleDark()" 
+class="fixed top-3 right-3 bg-white dark:bg-gray-700 text-sm px-3 py-1 rounded-full shadow">
+🌙
+</button>
+
+<script>
+
+setTimeout(()=>{
+  document.getElementById("splash").style.display="none";
+  document.getElementById("app").classList.remove("hidden");
+  loadPosts();
+},1500);
+
+function toggleDark(){
+  document.documentElement.classList.toggle("dark");
+}
+
+function showPage(page){
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("searchPage").classList.add("hidden");
+  document.getElementById("createPage").classList.add("hidden");
+  document.getElementById("notifPage").classList.add("hidden");
+  document.getElementById("profilePage").classList.add("hidden");
+
+  if(page==="home") document.getElementById("homePage").classList.remove("hidden");
+  if(page==="search") document.getElementById("searchPage").classList.remove("hidden");
+  if(page==="create") document.getElementById("createPage").classList.remove("hidden");
+  if(page==="notif") document.getElementById("notifPage").classList.remove("hidden");
+  if(page==="profile") document.getElementById("profilePage").classList.remove("hidden");
+}
+
+let posts = JSON.parse(localStorage.getItem("heyllo_posts")) || [];
+
+function addPost(){
+  const text = document.getElementById("postText").value;
+  const mood = document.getElementById("moodSelect").value;
+
+  if(!text) return alert("Write something!");
+
+  posts.unshift({ id:Date.now(), text, mood, likes:0 });
+  localStorage.setItem("heyllo_posts",JSON.stringify(posts));
+  document.getElementById("postText").value="";
+  showPage("home");
+  loadPosts();
+}
+
+function likePost(id){
+  posts = posts.map(p=>{
+    if(p.id===id) p.likes++;
+    return p;
+  });
+  localStorage.setItem("heyllo_posts",JSON.stringify(posts));
+  loadPosts();
+}
+
+function loadPosts(){
+  const home = document.getElementById("homePage");
+  home.innerHTML="";
+  posts.forEach(post=>{
+    home.innerHTML+=`
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4">
+        <p class="font-semibold text-gray-800 dark:text-white">@heyllo_user</p>
+        <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">
+          ${post.mood}
+        </span>
+        <p class="text-gray-700 dark:text-gray-200 mt-2">${post.text}</p>
+        <div class="flex justify-between mt-4 text-sm text-gray-600 dark:text-gray-300">
+          <button onclick="likePost(${post.id})">❤️ ${post.likes}</button>
+          <button>💬</button>
+          <button>🔗</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+</script>
+
+</body>
+</html>
