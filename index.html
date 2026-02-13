@@ -3,30 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heyllo</title>
+<title>Heyllo 💖</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { darkMode: 'class' }
 </script>
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 transition">
+<body class="bg-gray-100 dark:bg-gray-900 transition duration-300">
 
-<!-- Splash -->
-<div id="splash" class="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 text-white text-4xl font-bold z-50">
-Heyllo 💖
+<!-- 🔥 4 SECOND SWAGATAM -->
+<div id="welcomeScreen"
+class="fixed inset-0 flex items-center justify-center
+bg-gradient-to-br from-pink-500 to-purple-600
+text-white text-4xl font-bold z-50">
+Swagatam 🙏
 </div>
 
-<!-- LOGIN PAGE -->
-<div id="authPage" class="hidden flex items-center justify-center min-h-screen p-6">
-<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-sm">
+<!-- 👑 FOUNDER BADGE -->
+<div class="fixed top-3 left-3 bg-white dark:bg-gray-800 shadow-lg rounded-xl px-3 py-2 text-xs z-40">
+<p class="font-semibold text-pink-500">Aditya Sharma 👑</p>
+<p class="text-gray-600 dark:text-gray-300">s/o Manoj Kumar Sharma</p>
+<a href="mailto:aadityasharma9238@gmail.com"
+class="text-pink-500 font-semibold block">Contact</a>
+</div>
 
-<h2 class="text-2xl font-bold text-center text-pink-500 mb-4">Welcome to Heyllo</h2>
+<!-- AUTH PAGE -->
+<div id="authPage"
+class="hidden flex items-center justify-center min-h-screen p-6">
 
-<input id="authUsername" placeholder="Username"
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">
+
+<h1 class="text-3xl font-bold text-pink-500 mb-2">Heyllo 💖</h1>
+<p class="text-gray-500 mb-4">Connect • Share • Enjoy</p>
+
+<input id="authUsername"
+placeholder="Username"
 class="w-full p-2 border rounded-xl mb-3">
 
-<input id="authPassword" type="password" placeholder="Password"
+<input id="authPassword"
+type="password"
+placeholder="Password"
 class="w-full p-2 border rounded-xl mb-3">
 
 <button onclick="signup()"
@@ -49,20 +66,55 @@ Login
 Heyllo 💖
 </div>
 
+<!-- HOME -->
 <div id="homePage" class="p-4 space-y-4"></div>
 
+<!-- SEARCH -->
+<div id="searchPage" class="hidden p-4">
+<input id="searchInput" onkeyup="searchPosts()"
+placeholder="Search posts..."
+class="w-full p-2 rounded-xl border mb-4">
+<div id="searchResults"></div>
+</div>
+
+<!-- CREATE -->
 <div id="createPage" class="hidden p-4 space-y-3">
-<textarea id="postText" placeholder="What's on your mind?"
+<textarea id="postText"
+placeholder="What's on your mind?"
 class="w-full p-3 border rounded-xl"></textarea>
 
-<input type="file" id="imageInput" accept="image/*"
+<input type="file" id="imageInput"
+accept="image/*"
 class="w-full p-2 border rounded-xl bg-white">
 
-<select id="locationSelect" class="w-full p-2 border rounded-xl">
-<option value="📍 No Location">📍 No Location</option>
+<select id="locationSelect"
+class="w-full p-2 border rounded-xl">
+<option>No Location</option>
+<option>Jhareli</option>
+<option>Sunari</option>
+<option>Nagaur</option>
+<option>Jayal</option>
+<option>Manjara</option>
+<option>Baldu</option>
+<option>Sikar</option>
+<option>Vadodara</option>
+<option>Surat</option>
+<option>Pathalgaon</option>
+<option>Raigarh</option>
+<option>Bilaspur</option>
+<option>Jodhpur</option>
+<option>Khamiyad</option>
 <option>Delhi</option>
 <option>Mumbai</option>
 <option>Jaipur</option>
+</select>
+
+<select id="moodSelect"
+class="w-full p-2 border rounded-xl">
+<option>😊 Happy</option>
+<option>🔥 Motivated</option>
+<option>🌊 Chill</option>
+<option>✈️ Travel</option>
 </select>
 
 <button onclick="addPost()"
@@ -71,8 +123,33 @@ Post
 </button>
 </div>
 
+<!-- GROUP -->
+<div id="groupPage" class="hidden p-4">
+<input id="groupName"
+placeholder="Group Name"
+class="w-full p-2 border rounded-xl mb-3">
+
+<button onclick="createGroup()"
+class="w-full bg-purple-500 text-white p-3 rounded-xl">
+Create Group
+</button>
+
+<div id="groupList" class="mt-4 space-y-2"></div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notificationPage" class="hidden p-4">
+<h2 class="text-lg font-bold mb-3 dark:text-white">
+Notifications
+</h2>
+<div id="notificationList"></div>
+</div>
+
+<!-- PROFILE -->
 <div id="profilePage" class="hidden p-6 text-center">
-<h2 class="text-xl font-bold dark:text-white" id="profileName"></h2>
+<h2 id="profileName"
+class="text-xl font-bold dark:text-white"></h2>
+
 <button onclick="logout()"
 class="mt-4 bg-red-500 text-white px-4 py-2 rounded-xl">
 Logout
@@ -81,139 +158,178 @@ Logout
 
 </div>
 
-<!-- Bottom Nav -->
-<div id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-t-3xl flex justify-around py-3">
-<button onclick="showPage('home')" class="text-xl">🏠</button>
-<button onclick="showPage('create')" class="text-xl">➕</button>
-<button onclick="showPage('profile')" class="text-xl">👤</button>
+<!-- BOTTOM NAV -->
+<div id="bottomNav"
+class="hidden fixed bottom-0 left-0 right-0
+max-w-md mx-auto bg-white dark:bg-gray-800
+shadow-lg rounded-t-3xl flex justify-around py-3">
+
+<button onclick="showPage('home')">🏠</button>
+<button onclick="showPage('search')">🔍</button>
+<button onclick="showPage('create')" class="text-2xl text-pink-500">➕</button>
+<button onclick="showPage('group')">👥</button>
+<button onclick="showPage('notification')">🔔</button>
+<button onclick="showPage('profile')">👤</button>
+
 </div>
+
+<button onclick="toggleDark()"
+class="fixed top-3 right-3 bg-white dark:bg-gray-700 px-3 py-1 rounded-full shadow">
+🌙
+</button>
 
 <script>
 
-// Splash
+// 4 sec auto
 setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-checkAuth();
-},1500);
-
-// Auth System
-let currentUser = localStorage.getItem("heyllo_currentUser");
-
-function checkAuth(){
-if(currentUser){
-showApp();
-}else{
+welcomeScreen.style.display="none";
 authPage.classList.remove("hidden");
-}
-}
+},4000);
+
+let currentUser=null;
+let posts=JSON.parse(localStorage.getItem("heyllo_posts"))||[];
+let groups=JSON.parse(localStorage.getItem("heyllo_groups"))||[];
+let notifications=JSON.parse(localStorage.getItem("heyllo_notifications"))||[];
 
 function signup(){
-let username = authUsername.value;
-let password = authPassword.value;
-if(!username || !password) return alert("Fill all fields");
-
-localStorage.setItem("user_"+username,password);
-alert("Account created! Now login 😎");
+let u=authUsername.value;
+let p=authPassword.value;
+if(!u||!p)return alert("Fill all fields");
+if(localStorage.getItem("user_"+u))return alert("User exists");
+localStorage.setItem("user_"+u,p);
+alert("Account created");
 }
 
 function login(){
-let username = authUsername.value;
-let password = authPassword.value;
-
-let saved = localStorage.getItem("user_"+username);
-
-if(saved===password){
-localStorage.setItem("heyllo_currentUser",username);
-currentUser=username;
-showApp();
-}else{
-alert("Wrong credentials!");
-}
-}
-
-function logout(){
-localStorage.removeItem("heyllo_currentUser");
-location.reload();
-}
-
-function showApp(){
+let u=authUsername.value;
+let p=authPassword.value;
+if(localStorage.getItem("user_"+u)===p){
+currentUser=u;
 authPage.classList.add("hidden");
 app.classList.remove("hidden");
 bottomNav.classList.remove("hidden");
-profileName.innerText="@" + currentUser;
+profileName.innerText="@"+u;
 loadPosts();
+loadGroups();
+loadNotifications();
+}else alert("Wrong credentials");
 }
 
-// Navigation
+function logout(){
+location.reload();
+}
+
 function showPage(page){
-["homePage","createPage","profilePage"]
+["homePage","searchPage","createPage","groupPage","notificationPage","profilePage"]
 .forEach(id=>document.getElementById(id).classList.add("hidden"));
-
-if(page==="home") homePage.classList.remove("hidden");
-if(page==="create") createPage.classList.remove("hidden");
-if(page==="profile") profilePage.classList.remove("hidden");
+document.getElementById(page+"Page").classList.remove("hidden");
 }
 
-// Posts
-let posts = JSON.parse(localStorage.getItem("heyllo_posts")) || [];
+function toggleDark(){
+document.documentElement.classList.toggle("dark");
+}
 
 function addPost(){
-let text = postText.value;
-let imageFile = imageInput.files[0];
-let location = locationSelect.value;
+let text=postText.value;
+let mood=moodSelect.value;
+let location=locationSelect.value;
+let image=imageInput.files[0];
+if(!text&&!image)return alert("Add something");
 
-if(!text && !imageFile) return alert("Add something!");
-
-const reader = new FileReader();
-
-reader.onload = function(){
+const reader=new FileReader();
+reader.onload=function(){
 posts.unshift({
 id:Date.now(),
 user:currentUser,
-text,
-image:imageFile?reader.result:null,
-location,
-likes:0
+text,mood,location,
+image:image?reader.result:null,
+likes:0,
+comments:[]
 });
 localStorage.setItem("heyllo_posts",JSON.stringify(posts));
+notifications.unshift("New post by "+currentUser);
+localStorage.setItem("heyllo_notifications",JSON.stringify(notifications));
 postText.value="";
 imageInput.value="";
 loadPosts();
+loadNotifications();
 showPage("home");
 };
-
-if(imageFile){
-reader.readAsDataURL(imageFile);
-}else{
-reader.onload();
-}
-}
-
-function likePost(id){
-posts = posts.map(p=>{
-if(p.id===id) p.likes++;
-return p;
-});
-localStorage.setItem("heyllo_posts",JSON.stringify(posts));
-loadPosts();
+if(image)reader.readAsDataURL(image);
+else reader.onload();
 }
 
 function loadPosts(){
 homePage.innerHTML="";
-posts.forEach(post=>{
+posts.forEach(p=>{
 homePage.innerHTML+=`
-<div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-4">
-<p class="font-semibold">@${post.user}</p>
-${post.image ? `<img src="${post.image}" class="rounded-xl mt-3">` : ""}
-<p class="mt-2">${post.text||""}</p>
-<p class="text-xs text-gray-500">${post.location}</p>
-<button onclick="likePost(${post.id})">❤️ ${post.likes}</button>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow">
+<p class="font-semibold">@${p.user}</p>
+<p>${p.mood}</p>
+${p.image?`<img src="${p.image}" class="rounded-xl mt-2">`:""}
+<p class="mt-2">${p.text||""}</p>
+<p class="text-xs text-gray-500">${p.location}</p>
+<div class="flex justify-between mt-2">
+<button onclick="likePost(${p.id})">❤️ ${p.likes}</button>
+<button onclick="commentPost(${p.id})">💬 ${p.comments.length}</button>
 </div>
-`;
+</div>`;
+});
+}
+
+function likePost(id){
+posts=posts.map(p=>{if(p.id===id)p.likes++;return p});
+localStorage.setItem("heyllo_posts",JSON.stringify(posts));
+loadPosts();
+}
+
+function commentPost(id){
+let text=prompt("Comment:");
+if(!text)return;
+posts=posts.map(p=>{if(p.id===id)p.comments.push(text);return p});
+localStorage.setItem("heyllo_posts",JSON.stringify(posts));
+loadPosts();
+}
+
+function searchPosts(){
+let q=searchInput.value.toLowerCase();
+searchResults.innerHTML="";
+posts.filter(p=>p.text&&p.text.toLowerCase().includes(q))
+.forEach(p=>{
+searchResults.innerHTML+=`
+<div class="bg-white p-3 rounded-xl mb-2">${p.text}</div>`;
+});
+}
+
+function createGroup(){
+let name=groupName.value;
+if(!name)return;
+groups.push(name);
+localStorage.setItem("heyllo_groups",JSON.stringify(groups));
+groupName.value="";
+loadGroups();
+}
+
+function loadGroups(){
+groupList.innerHTML="";
+groups.forEach(g=>{
+groupList.innerHTML+=`
+<div class="bg-white dark:bg-gray-800 p-3 rounded-xl shadow">
+👥 ${g}
+</div>`;
+});
+}
+
+function loadNotifications(){
+notificationList.innerHTML="";
+notifications.slice(0,10).forEach(n=>{
+notificationList.innerHTML+=`
+<div class="bg-white dark:bg-gray-800 p-3 rounded-xl shadow mb-2">
+${n}
+</div>`;
 });
 }
 
 </script>
-
 </body>
 </html>
